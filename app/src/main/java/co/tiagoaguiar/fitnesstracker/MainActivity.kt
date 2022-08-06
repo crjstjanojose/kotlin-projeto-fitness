@@ -1,7 +1,9 @@
 package co.tiagoaguiar.fitnesstracker
+
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -40,23 +42,21 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        val adapter = MainAdapter(mainItens, object : OnItemClickListener {
-            override fun onClick(id: Int) {
-                when (id) {
-                    1 -> {
-                        val intent = Intent(this@MainActivity, ImcActivity::class.java)
-                        startActivity(intent)
-                    }
-                    2 -> {
-                        // Abrir outra
-                    }
-                    3 -> {
-                        // Abrir outra
-                    }
+        val adapter = MainAdapter(mainItens) { id ->
+            when (id) {
+                1 -> {
+                    val intent = Intent(this@MainActivity, ImcActivity::class.java)
+                    startActivity(intent)
+                }
+                2 -> {
+                    // Abrir outra
+                    Log.i("Click Ativado", "Item Clicado $id")
+                }
+                3 -> {
+                    // Abrir outra
                 }
             }
-
-        })
+        }
 
         rvMain = findViewById(R.id.rv_main)
         rvMain.adapter = adapter
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
     private inner class MainAdapter(
         private val mainItens: List<MainItem>,
-        private val onItemClickListener: OnItemClickListener
+        private val onItemClickListener: (Int) -> Unit
     ) :
         RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
                 container.setBackgroundColor(item.color)
 
                 container.setOnClickListener {
-                    onItemClickListener.onClick(item.id)
+                    onItemClickListener.invoke(item.id)
                 }
 
             }
