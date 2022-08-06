@@ -3,6 +3,10 @@ package co.tiagoaguiar.fitnesstracker
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+<<<<<<< HEAD
+=======
+import android.util.Log
+>>>>>>> origin/master
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -12,7 +16,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+<<<<<<< HEAD
 class MainActivity : AppCompatActivity() {
+=======
+class MainActivity : AppCompatActivity(), OnItemClickListener {
+>>>>>>> origin/master
 
     private lateinit var rvMain: RecyclerView
 
@@ -40,6 +48,7 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
+<<<<<<< HEAD
         val adapter = MainAdapter(mainItens, object : OnItemClickListener {
             override fun onClick(id: Int) {
                 when (id) {
@@ -57,12 +66,35 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+=======
+        val adapter = MainAdapter(mainItens, this)
+>>>>>>> origin/master
         rvMain = findViewById(R.id.rv_main)
         rvMain.adapter = adapter
         rvMain.layoutManager = GridLayoutManager(this, 2)
 
+<<<<<<< HEAD
     }
 
+=======
+
+    }
+
+    override fun onClick(id: Int) {
+        when (id) {
+            1 -> {
+                val intent = Intent(this, ImcActivity::class.java)
+                startActivity(intent)
+            }
+            2 -> {
+                // Abrir outra
+            }
+            3 -> {
+                // Abrir outra
+            }
+        }
+    }
+>>>>>>> origin/master
 
     private inner class MainAdapter(
         private val mainItens: List<MainItem>,
@@ -110,4 +142,9 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> origin/master
 }
