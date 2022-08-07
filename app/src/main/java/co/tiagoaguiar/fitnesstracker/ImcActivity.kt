@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import co.tiagoaguiar.fitnesstracker.model.Calc
 
 class ImcActivity : AppCompatActivity() {
 
@@ -42,12 +43,29 @@ class ImcActivity : AppCompatActivity() {
                 .setPositiveButton(android.R.string.ok) { dialog, which ->
 
                 }
+                .setNegativeButton(R.string.save) { dialog, which ->
+
+                    Thread {
+                        val app = application as App
+                        val dao = app.db.CalcDAO()
+                        dao.insert(Calc(type = "IMC", res = result))
+
+                        runOnUiThread {
+                            Toast.makeText(
+                                this@ImcActivity,
+                                R.string.calc_saved,
+                                Toast.LENGTH_SHORT
+                            )
+                        }
+
+                    }.start()
+                }
                 .create()
                 .show()
 
             // TRATAMENTO FECHAMENTO TECLADO
             val serviceInput = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            serviceInput.hideSoftInputFromWindow(currentFocus?.windowToken,0)
+            serviceInput.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         }
     }
 
