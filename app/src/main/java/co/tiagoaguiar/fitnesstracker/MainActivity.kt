@@ -49,11 +49,8 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 2 -> {
-                    // Abrir outra
-                    Log.i("Click Ativado", "Item Clicado $id")
-                }
-                3 -> {
-                    // Abrir outra
+                    val intent = Intent(this@MainActivity, TmbActivity::class.java)
+                    startActivity(intent)
                 }
             }
         }
