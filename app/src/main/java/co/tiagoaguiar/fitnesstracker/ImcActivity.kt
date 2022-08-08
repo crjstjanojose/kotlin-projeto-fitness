@@ -1,7 +1,10 @@
 package co.tiagoaguiar.fitnesstracker
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
@@ -51,11 +54,7 @@ class ImcActivity : AppCompatActivity() {
                         dao.insert(Calc(type = "IMC", res = result))
 
                         runOnUiThread {
-                            Toast.makeText(
-                                this@ImcActivity,
-                                R.string.calc_saved,
-                                Toast.LENGTH_SHORT
-                            )
+                            openListActivity()
                         }
 
                     }.start()
@@ -67,6 +66,29 @@ class ImcActivity : AppCompatActivity() {
             val serviceInput = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             serviceInput.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (item.itemId == R.id.menu_buscar) {
+            finish()
+            openListActivity()
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun openListActivity() {
+        // Abrir outra activity e envar dados
+        val intent = Intent(this@ImcActivity, ListCalcActivity::class.java)
+        intent.putExtra("type", "IMC")
+        startActivity(intent)
     }
 
     @StringRes
